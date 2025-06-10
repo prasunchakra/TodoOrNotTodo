@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>My Task List</h1>
+  <ul id="task-list"></ul>
+
+  <script>
+    // Define individual task variables
+    const task1 = "Buy groceries";
+    const task2 = "Complete JavaScript basics";
+    const task3 = "Read a book";
+
+    // Select the task-list element
+    const taskList = document.getElementById('task-list');
+
+    // Add tasks individually to the list
+    taskList.innerHTML = `
+      <li>${task1}</li>
+      <li>${task2}</li>
+      <li>${task3}</li>
+    `;
+  </script>
+
+</body>
+</html>
