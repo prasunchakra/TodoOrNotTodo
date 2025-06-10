@@ -12,20 +12,41 @@
   <ul id="task-list"></ul>
 
   <script>
-    // Define individual task variables
-    const task1 = "Buy groceries";
-    const task2 = "Complete JavaScript basics";
-    const task3 = "Read a book";
+    // Define tasks array with priority
+    const tasks = [
+      { id: 1, title: "Buy groceries", priority: "High" },
+      { id: 2, title: "Complete JavaScript", priority: "Critical" },
+      { id: 3, title: "Read a book", priority: "Medium" }
+    ];
 
-    // Select the task-list element
+    // Select the task-list element 
     const taskList = document.getElementById('task-list');
 
-    // Add tasks individually to the list
-    taskList.innerHTML = `
-      <li>${task1}</li>
-      <li>${task2}</li>
-      <li>${task3}</li>
-    `;
+    // Loop through the tasks array and add the task to the task-list element
+    tasks.forEach(task => {
+      let color;
+
+      // Control flow to determine text color based on priority 
+      switch(task.priority) {
+        case "Critical":
+          color = "#e74c3c"; // red
+          break;
+        case "High":
+          color = "#f39c12"; // orange
+          break;
+        case "Medium":
+          color = "#3498db"; // blue
+          break;
+        default:
+          color = "#2ecc71"; // green
+      }
+
+      // Add the task to the task-list element
+      taskList.innerHTML += `
+        <li style="color: ${color}">
+          ${task.title} <span class="priority-badge">${task.priority}</span>
+        </li>`;
+    });
   </script>
 
 </body>
