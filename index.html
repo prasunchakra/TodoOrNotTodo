@@ -9,43 +9,72 @@
 <body>
 
   <h1>My Task List</h1>
+  <form id="task-form">
+    <input type="text" id="task-input" placeholder="Enter task" required />
+    <select id="priority-input">
+      <option value="Critical">Critical</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+    <button type="submit">Add Task</button>
+  </form>
   <ul id="task-list"></ul>
 
   <script>
-    // Define tasks array with priority
-    const tasks = [
+    // Initialize tasks array with some initial tasks
+   const tasks = [
       { id: 1, title: "Buy groceries", priority: "High" },
       { id: 2, title: "Complete JavaScript", priority: "Critical" },
       { id: 3, title: "Read a book", priority: "Medium" }
     ];
-
-    // Select the task-list element 
+    const taskForm = document.getElementById('task-form');
     const taskList = document.getElementById('task-list');
 
-    // Loop through the tasks array and add the task to the task-list element
-    tasks.forEach(task => {
-      let color;
+    // Function to sanitize input
+    const sanitizeInput = (input) => input.trim().toLowerCase();
 
-      // Control flow to determine text color based on priority 
-      switch(task.priority) {
-        case "Critical":
-          color = "#e74c3c"; // red
-          break;
-        case "High":
-          color = "#f39c12"; // orange
-          break;
-        case "Medium":
-          color = "#3498db"; // blue
-          break;
-        default:
-          color = "#2ecc71"; // green
+    // Function to add and display tasks
+    const addTask = (title, priority) => {
+      const sanitizedTitle = sanitizeInput(title);
+      const task = { id: tasks.length + 1, title: sanitizedTitle, priority };
+      tasks.push(task);
+      renderTasks();
+    };
+
+    // Function to render tasks to the DOM
+    const renderTasks = () => {
+      taskList.innerHTML = '';
+      tasks.forEach(({ title, priority }) => {
+        let color;
+
+        switch(priority) {
+          case "Critical": color = "#e74c3c"; break;
+          case "High": color = "#f39c12"; break;
+          case "Medium": color = "#3498db"; break;
+          default: color = "#2ecc71";
+        }
+
+        taskList.innerHTML += `
+          <li style="color: ${color}">
+            ${title} <span class="priority-badge">${priority}</span>
+          </li>`;
+      });
+    };
+    renderTasks();
+    // Event Listener for form submission
+    taskForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent page reload
+
+      const title = document.getElementById('task-input').value;
+      const priority = document.getElementById('priority-input').value;
+
+      if (title) {
+        addTask(title, priority);
+        taskForm.reset(); // Clear form fields
+      } else {
+        alert("Please enter a task!");
       }
-
-      // Add the task to the task-list element
-      taskList.innerHTML += `
-        <li style="color: ${color}">
-          ${task.title} <span class="priority-badge">${task.priority}</span>
-        </li>`;
     });
   </script>
 
